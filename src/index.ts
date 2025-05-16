@@ -61,5 +61,5 @@ datasource
   .catch((error) => console.error(error));
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('hello woraaaaa');
+  res.send('hello world');
 });
