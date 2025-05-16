@@ -13,7 +13,7 @@ import workspaceUserController from './module/workspace-users/workspace-user.con
 import userController from './module/users/user.controller';
 
 require('dotenv').config();
-const port = 3000;
+const port = 8888;
 const app: Express = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
