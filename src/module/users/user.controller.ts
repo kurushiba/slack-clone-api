@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import datasource from '../../datasource';
 import { User } from './user.entity';
 import { Auth } from '../../lib/auth';
-import { Like } from 'typeorm';
+import { Like, Not } from 'typeorm';
 
 const userController = Router();
 const userRepository = datasource.getRepository(User);
@@ -17,7 +17,16 @@ userController.get('/', Auth, async (req: Request, res: Response) => {
     }
 
     const users = await userRepository.find({
-      where: [{ name: Like(`%${keyword}%`) }, { email: Like(`%${keyword}%`) }],
+      where: [
+        {
+          name: Like(`%${keyword}%`),
+          id: Not(req.currentUser.id),
+        },
+        {
+          email: Like(`%${keyword}%`),
+          id: Not(req.currentUser.id),
+        },
+      ],
       select: ['id', 'name', 'email', 'thumbnailUrl'],
       relations: ['workspaceUsers'],
     });
