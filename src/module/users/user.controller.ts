@@ -17,7 +17,7 @@ userController.get('/', Auth, async (req: Request, res: Response) => {
     }
 
     const users = await userRepository.find({
-      where: { name: Like(`%${keyword}%`) },
+      where: [{ name: Like(`%${keyword}%`) }, { email: Like(`%${keyword}%`) }],
       select: ['id', 'name', 'email', 'thumbnailUrl'],
       relations: ['workspaceUsers'],
     });
